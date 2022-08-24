@@ -27,7 +27,7 @@ jobs:
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: DGMPGDec_Build_Release_msvc16.bat
+      run: cmd DGMPGDec_Build_Release_msvc16.bat
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.0
