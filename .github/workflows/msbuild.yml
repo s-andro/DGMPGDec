@@ -1,0 +1,36 @@
+name: MSBuild
+
+on:
+  push:
+    branches: [ "workaround" ]
+  pull_request:
+    branches: [ "workaround" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: NASM
+      uses: ilammy/setup-nasm@v1.3.0
+      with:
+        from-source: false
+        platform: win32
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: DGMPGDec_Build_Release_msvc16.bat
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: DGMPGDec_win32_msvc16
+        path: bin
